@@ -1,11 +1,21 @@
-name: My First Workflow
-on: push
+name: Build, Test, and Deploy
+
+on:
+  push:
+    branches:
+      - main
+      - feat/cicd
+  pull_request:
+    branches: [main]
 
 jobs:
-  hello-world:
+  build:
+    name: Build Application
     runs-on: ubuntu-latest
     steps:
-      - name: Print hello
-        run: echo "Hello, World!"
 
-  
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Start container
+        run: docker compose up -d --build
